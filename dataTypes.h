@@ -1,8 +1,4 @@
 #pragma once
-//#include "data.h"
-//#include "intData.h"
-//#include "doubleData.h"
-//#include "stringData.h"
 
 namespace HeterogeneousTree {
 	namespace DataTypes {

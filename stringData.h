@@ -15,7 +15,7 @@ namespace HeterogeneousTree {
 			~StringData() = default;
 
 			int getId() const override {
-				return DataTypeId::stringData;
+				return static_cast<int>(DataTypeId::stringData);
 			}
 
 			void print(std::ostream& out) const override{

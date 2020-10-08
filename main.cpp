@@ -42,6 +42,8 @@ void TestSimple() {
 int main(int argc, char ** argv) {
 	int rez=0;
 
+	// TestSimple();
+
 	auto head = _create_empty_head();
 	bool file_deserialized = false;
 

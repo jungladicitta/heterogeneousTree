@@ -16,7 +16,7 @@ namespace HeterogeneousTree {
 			~IntData() = default;
 
 			int getId() const override {
-				return DataTypeId::intData;
+				return static_cast<int>(DataTypeId::intData);
 			}
 
 			void print(std::ostream& out) const override{

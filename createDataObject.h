@@ -8,12 +8,13 @@
 #include "stringData.h"
 
 HeterogeneousTree::DataTypes::DataPtr createDataObject(int type_id) {
-	switch(type_id) {
-	case 1:
+	auto data_type = static_cast<HeterogeneousTree::DataTypes::DataTypeId>(type_id);
+	switch(data_type) {
+	case HeterogeneousTree::DataTypes::DataTypeId::intData:
 		return std::make_shared<HeterogeneousTree::DataTypes::IntData>();
-	case 2:
+	case HeterogeneousTree::DataTypes::DataTypeId::doubleData:
 		return std::make_shared<HeterogeneousTree::DataTypes::DoubleData>();
-	case 3:
+	case HeterogeneousTree::DataTypes::DataTypeId::stringData:
 		return std::make_shared<HeterogeneousTree::DataTypes::StringData>();
 	default:
 		throw std::invalid_argument("type_id not found");

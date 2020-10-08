@@ -14,7 +14,7 @@ namespace HeterogeneousTree {
 	class Node {
 	public:
 		Node() = default;
-		Node(DataTypes::DataPtr value) : node_value_(value) {
+		Node(DataTypes::DataPtr value) : node_value_(std::move(value)) {
 		}
 		~Node() = default;
 
@@ -22,18 +22,18 @@ namespace HeterogeneousTree {
 			return node_value_;
 		}
 
-		bool isChild(const DataTypes::Data& data_to_check) const {
-			for (auto& child : childs_) {
-				if (*(child->getNodeValuePtr()).get() == (data_to_check)) {
-					return true;
-				}
-			}
-			return false;
-		}
+		// bool isChild(const DataTypes::Data& data_to_check) const {
+		// 	for (auto& child : childs_) {
+		// 		if (*(child->getNodeValuePtr()).get() == (data_to_check)) {
+		// 			return true;
+		// 		}
+		// 	}
+		// 	return false;
+		// }
 
 		NodePtr& addChild(NodePtr child) {
 			//
-			childs_.push_back(child);
+			childs_.push_back(std::move(child));
 			return childs_.back();
 		}
 
@@ -45,7 +45,7 @@ namespace HeterogeneousTree {
 			size_t childs_num = childs_.size();
 			Serialize(childs_num, out);
 
-			for (auto item : childs_) {
+			for (const auto& item : childs_) {
 				item->serialize(out);
 			}
 		}
@@ -59,7 +59,7 @@ namespace HeterogeneousTree {
 
 			size_t childs_size;
 			Deserialize(in, childs_size);
-			childs_ = std::vector<NodePtr>(childs_size);
+			childs_.resize(childs_size);
 
 			for (auto& item : childs_) {
 				item = std::make_shared<Node>();
@@ -68,10 +68,10 @@ namespace HeterogeneousTree {
 		}
 
 		void print(std::ostream& out, size_t prefix = 0) const {
-			out << std::string(prefix, ' ');
+			for (int i = 1; i <= prefix; ++i) out << ' ';
 			node_value_->print(out);
 
-			for (auto item : childs_) {
+			for (const auto& item : childs_) {
 				item->print(out, prefix + 4);
 			}
 		}
